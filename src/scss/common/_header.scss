@@ -1,6 +1,5 @@
 header {
 	width: 100%;
-	background: #222;
 
 	.inner {
 		width: 1180px;
@@ -15,7 +14,6 @@ header {
 
 			a {
 				font: bold 24px/1 'arial';
-				color: #fff;
 			}
 		}
 
@@ -31,8 +29,39 @@ header {
 					display: inline-block;
 					padding: 20px 30px;
 					font: bold 14px/1 'arial';
-					color: #fff;
 				}
+			}
+		}
+	}
+
+	&.sub {
+		background: #222;
+
+		.inner {
+			h1 a {
+				color: #fff;
+			}
+			#gnb li a {
+				color: #fff;
+			}
+		}
+	}
+
+	&.main {
+		width: 100%;
+		background: transparent;
+		border-bottom: 1px solid #ccc;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+
+		.inner {
+			h1 a {
+				color: #fff;
+			}
+			#gnb li a {
+				color: #eee;
 			}
 		}
 	}

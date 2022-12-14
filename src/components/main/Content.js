@@ -1,10 +1,10 @@
 function Content() {
 	return (
-		<section>
+		<main>
 			<div className='inner'>
 				<h1>Content</h1>
 			</div>
-		</section>
+		</main>
 	);
 }
 

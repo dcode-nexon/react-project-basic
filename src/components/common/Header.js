@@ -1,14 +1,12 @@
 import { Link, NavLink } from 'react-router-dom';
 
-function Header() {
+function Header({ type }) {
 	const active = { color: 'aqua' };
 	return (
-		<header>
+		<header className={type}>
 			<div className='inner'>
 				<h1>
-					<Link exact to='/'>
-						DCODELAB
-					</Link>
+					<Link to='/'>DCODELAB</Link>
 				</h1>
 
 				<ul id='gnb'>

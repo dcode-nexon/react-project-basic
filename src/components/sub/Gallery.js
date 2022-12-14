@@ -1,6 +1,7 @@
 function Gallery() {
 	return (
-		<section>
+		<section className='content gallery'>
+			<figure></figure>
 			<div className='inner'>
 				<h1>Gallery</h1>
 			</div>
