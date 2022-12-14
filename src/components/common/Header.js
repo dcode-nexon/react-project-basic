@@ -1,4 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function Header({ type }) {
 	const active = { color: 'aqua' };
@@ -41,6 +43,8 @@ function Header({ type }) {
 						</NavLink>
 					</li>
 				</ul>
+
+				<FontAwesomeIcon icon={faBars} />
 			</div>
 		</header>
 	);

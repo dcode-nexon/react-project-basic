@@ -16,3 +16,12 @@ footer {
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	footer {
+		padding: 50px 40px;
+		.inner {
+			width: 100%;
+		}
+	}
+}
