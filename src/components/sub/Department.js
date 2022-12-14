@@ -1,12 +1,7 @@
+import Layout from '../common/Layout';
+
 function Department() {
-	return (
-		<section className='content department'>
-			<figure></figure>
-			<div className='inner'>
-				<h1>Department</h1>
-			</div>
-		</section>
-	);
+	return <Layout name={'Department'}></Layout>;
 }
 
 export default Department;

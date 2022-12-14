@@ -1,12 +1,7 @@
+import Layout from '../common/Layout';
+
 function Community() {
-	return (
-		<section className='content community'>
-			<figure></figure>
-			<div className='inner'>
-				<h1>Community</h1>
-			</div>
-		</section>
-	);
+	return <Layout name={'Community'}></Layout>;
 }
 
 export default Community;
