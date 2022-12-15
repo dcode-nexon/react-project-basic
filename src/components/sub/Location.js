@@ -51,9 +51,18 @@ function Location() {
 	});
 
 	useEffect(() => {
+		container.current.innerHTML = '';
 		const map_instance = new kakao.maps.Map(container.current, option);
 		marker.setMap(map_instance);
 		setLocation(map_instance);
+
+		const mapTypeControl = new kakao.maps.MapTypeControl();
+		map_instance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
+
+		const zoomControl = new kakao.maps.ZoomControl();
+		map_instance.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+		window.addEventListener('resize', () => map_instance.setCenter(Info[Index].latlng));
 	}, [Index]);
 
 	//Traffic state값이 변경될 때마다 지도 정보를 On, off처리
