@@ -75,26 +75,30 @@ function Location() {
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
-			<button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic ON' : 'Traffic OFF'}</button>
+			<nav>
+				<button onClick={() => setTraffic(!Traffic)}>
+					{Traffic ? 'Traffic ON' : 'Traffic OFF'}
+				</button>
 
-			<ul className='branch'>
-				{Info.map((el, idx) => {
-					let isOn = '';
-					Index === idx && (isOn = 'on');
-					return (
-						<li
-							key={idx}
-							className={isOn}
-							onClick={() => {
-								setIndex(idx);
-								setTraffic(false);
-							}}
-						>
-							{el.title}
-						</li>
-					);
-				})}
-			</ul>
+				<ul className='branch'>
+					{Info.map((el, idx) => {
+						let isOn = '';
+						Index === idx && (isOn = 'on');
+						return (
+							<li
+								key={idx}
+								className={isOn}
+								onClick={() => {
+									setIndex(idx);
+									setTraffic(false);
+								}}
+							>
+								{el.title}
+							</li>
+						);
+					})}
+				</ul>
+			</nav>
 		</Layout>
 	);
 }
