@@ -1,9 +1,11 @@
 import Layout from '../common/Layout';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 function Location() {
 	const { kakao } = window;
 	const container = useRef(null);
+	const [Location, setLocation] = useState(null);
+	const [Traffic, setTraffic] = useState(false);
 
 	//지도 기본 위치및 확대레벨 정보
 	const option = {
@@ -31,11 +33,20 @@ function Location() {
 	useEffect(() => {
 		const map_instance = new kakao.maps.Map(container.current, option);
 		marker.setMap(map_instance);
+		setLocation(map_instance);
 	}, []);
+
+	//Traffic state값이 변경될 때마다 지도 정보를 On, off처리
+	useEffect(() => {
+		Traffic
+			? Location?.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
+			: Location?.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+	}, [Traffic]);
 
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
+			<button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic ON' : 'Traffic OFF'}</button>
 		</Layout>
 	);
 }
