@@ -9,6 +9,7 @@ function Member() {
 		pwd2: '',
 		gender: null,
 		interests: null,
+		comments: '',
 	};
 
 	const [Val, setVal] = useState(initVal);
@@ -42,6 +43,9 @@ function Member() {
 		}
 		if (!Val.interests) {
 			errs.interests = '관심사를 하나이상 선택하세요.';
+		}
+		if (Val.comments.length < 20) {
+			errs.comments = '남기는 말을 20글자 이상 입력하세요.';
 		}
 		return errs;
 	};
@@ -181,6 +185,25 @@ function Member() {
 									<input type='checkbox' name='interests' id='game' onChange={handleCheck} />
 
 									<span className='err'>{Err.interests}</span>
+								</td>
+							</tr>
+
+							{/* comments */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='comments'>COMMENTS</label>
+								</th>
+								<td>
+									<textarea
+										name='comments'
+										id='comments'
+										cols='30'
+										rows='5'
+										value={Val.comments}
+										onChange={handleChange}
+										placeholder='남기는 말을 입력하세요.'
+									></textarea>
+									<span className='err'>{Err.comments}</span>
 								</td>
 							</tr>
 
