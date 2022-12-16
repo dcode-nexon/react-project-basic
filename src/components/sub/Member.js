@@ -1,7 +1,9 @@
 import Layout from '../common/Layout';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Member() {
+	const history = useHistory();
 	const initVal = {
 		userid: '',
 		email: '',
@@ -10,10 +12,12 @@ function Member() {
 		gender: null,
 		interests: null,
 		comments: '',
+		edu: '',
 	};
 
 	const [Val, setVal] = useState(initVal);
 	const [Err, setErr] = useState({});
+	const [Submit, setSubmit] = useState(false);
 
 	const check = (value) => {
 		const errs = {};
@@ -47,6 +51,9 @@ function Member() {
 		if (Val.comments.length < 20) {
 			errs.comments = '남기는 말을 20글자 이상 입력하세요.';
 		}
+		if (Val.edu === '') {
+			errs.edu = '최종 학력을 선택하세요';
+		}
 		return errs;
 	};
 
@@ -72,13 +79,30 @@ function Member() {
 		setVal({ ...Val, [name]: isChecked });
 	};
 
+	const handleSelect = (e) => {
+		const { name } = e.target;
+		const isSelected = e.target.value;
+		setVal({ ...Val, [name]: isSelected });
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErr(check(Val));
 	};
 
+	const handleReset = () => {
+		setSubmit(false);
+		setErr({});
+		setVal(initVal);
+	};
+
 	useEffect(() => {
-		console.log(Err);
+		const len = Object.keys(Err).length;
+		if (len === 0 && Submit) {
+			alert('회원가입이 완료되었습니다.');
+			history.push('/');
+			window.scroll(0, 0);
+		}
 	}, [Err]);
 
 	return (
@@ -188,6 +212,23 @@ function Member() {
 								</td>
 							</tr>
 
+							{/* edu */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='edu'>EDUCATION</label>
+								</th>
+								<td>
+									<select name='edu' id='edu' onChange={handleSelect}>
+										<option value=''>학력을 선택하세요</option>
+										<option value='elementary school'>초등학교 졸업</option>
+										<option value='middle school'>중학교 졸업</option>
+										<option value='high school'>고등학교 졸업</option>
+										<option value='college'>대학교 졸업</option>
+									</select>
+									<span className='err'>{Err.edu}</span>
+								</td>
+							</tr>
+
 							{/* comments */}
 							<tr>
 								<th scope='row'>
@@ -210,8 +251,8 @@ function Member() {
 							{/* btn set */}
 							<tr>
 								<th colSpan='2'>
-									<input type='reset' value='reset' />
-									<input type='submit' value='submit' />
+									<input type='reset' value='reset' onClick={handleReset} />
+									<input type='submit' value='submit' onClick={() => setSubmit(true)} />
 								</th>
 							</tr>
 						</tbody>
