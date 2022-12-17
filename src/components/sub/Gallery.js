@@ -24,7 +24,12 @@ function Gallery() {
 			url = `${baseURL}&method=${method_search}&api_key=${key}&per_page=${num}&tags=${opt.tags}`;
 
 		const result = await axios.get(url);
-		console.log(result.data.photos.photo);
+		if (result.data.photos.photo.length === 0) {
+			frame.current.classList.add('on');
+			setLoading(false);
+			return alert('해당 검색어의 결과 이미지가 없습니다.');
+		}
+
 		setItems(result.data.photos.photo);
 
 		setTimeout(() => {
@@ -36,6 +41,7 @@ function Gallery() {
 	const showSearch = () => {
 		const result = input.current.value.trim();
 		input.current.value = '';
+		if (!result) return alert('검색어를 입력하세요.');
 		setLoading(true);
 		frame.current.classList.remove('on');
 		getFlickr({ type: 'search', tags: result });
