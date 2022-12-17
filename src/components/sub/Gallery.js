@@ -5,8 +5,8 @@ import Masonry from 'react-masonry-component';
 
 function Gallery() {
 	const masonryOptions = { transitionDuration: '0.5s' };
-
 	const frame = useRef(null);
+	const input = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
 
@@ -15,7 +15,7 @@ function Gallery() {
 		const key = 'ae5dbef0587895ed38171fcda4afb648';
 		const method_interest = 'flickr.interestingness.getList';
 		const method_search = 'flickr.photos.search';
-		const num = 40;
+		const num = 500;
 		let url = '';
 
 		if (opt.type === 'interest')
@@ -33,32 +33,43 @@ function Gallery() {
 		}, 500);
 	};
 
+	const showSearch = () => {
+		const result = input.current.value.trim();
+		input.current.value = '';
+		setLoading(true);
+		frame.current.classList.remove('on');
+		getFlickr({ type: 'search', tags: result });
+	};
+
 	useEffect(async () => {
-		//getFlickr({ type: 'search', tags: '하늘' });
 		getFlickr({ type: 'interest' });
 	}, []);
 
 	return (
 		<Layout name={'Gallery'}>
-			<button
-				onClick={() => {
-					frame.current.classList.remove('on');
-					setLoading(true);
-					getFlickr({ type: 'interest' });
-				}}
-			>
-				Interest Gallery
-			</button>
+			<div className='controls'>
+				<div className='searchBox'>
+					<input
+						type='text'
+						ref={input}
+						placeholder='검색어를 입력하세요.'
+						onKeyUp={(e) => e.key === 'Enter' && showSearch()}
+					/>
+					<button onClick={showSearch}>Search</button>
+				</div>
 
-			<button
-				onClick={() => {
-					frame.current.classList.remove('on');
-					setLoading(true);
-					getFlickr({ type: 'search', tags: '바다' });
-				}}
-			>
-				Search Gallery
-			</button>
+				<nav>
+					<button
+						onClick={() => {
+							frame.current.classList.remove('on');
+							setLoading(true);
+							getFlickr({ type: 'interest' });
+						}}
+					>
+						Interest Gallery
+					</button>
+				</nav>
+			</div>
 
 			{Loading && <img className='loading' src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
 			<div className='frame' ref={frame}>
