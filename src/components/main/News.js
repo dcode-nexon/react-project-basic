@@ -52,16 +52,18 @@ function News() {
 	return (
 		<main id='news' className='myScroll'>
 			<h1>News</h1>
-			{Posts.map((post, idx) => {
-				if (idx >= 4) return;
+			<div className='wrapper'>
+				{Posts.map((post, idx) => {
+					if (idx >= 4) return;
 
-				return (
-					<article key={idx}>
-						<h2>{post.title}</h2>
-						<p>{post.content}</p>
-					</article>
-				);
-			})}
+					return (
+						<article key={idx}>
+							<h2>{post.title}</h2>
+							<p>{post.content}</p>
+						</article>
+					);
+				})}
+			</div>
 		</main>
 	);
 }
