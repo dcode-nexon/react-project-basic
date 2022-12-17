@@ -1,9 +1,9 @@
 #news {
 	width: 100%;
-	height: 100vh;
 	background: #cbffcb;
 	position: relative;
 	padding: 10vw;
+	overflow: hidden;
 
 	h1 {
 		font: bold 100px/1 'arial';
@@ -26,6 +26,7 @@
 			box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
 			opacity: 0;
 			transform: rotateY(360deg) translateY(100px);
+			overflow: hidden;
 			transition-duration: 0.5s;
 
 			h2 {
@@ -46,10 +47,42 @@
 		}
 	}
 
+	.decoTxt {
+		font: bold 250px/1 'arial';
+		color: rgba(0, 0, 0, 0.05);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 2700px;
+	}
+
 	&.on {
 		.wrapper article {
 			opacity: 1;
 			transform: rotateY(0deg) translateY(0px);
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	#news {
+		.wrapper {
+			article {
+				width: 48%;
+				height: auto;
+				margin-bottom: 20px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	#news {
+		.wrapper {
+			article {
+				width: 100%;
+				margin-bottom: 20px;
+			}
 		}
 	}
 }
