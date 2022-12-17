@@ -50,7 +50,7 @@ function News() {
 	}, []);
 
 	return (
-		<main id='news'>
+		<main id='news' className='myScroll'>
 			<h1>News</h1>
 			{Posts.map((post, idx) => {
 				if (idx >= 4) return;
