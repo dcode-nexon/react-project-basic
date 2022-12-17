@@ -1,5 +1,6 @@
 import Layout from '../common/Layout';
 import { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Community() {
 	const input = useRef(null);
@@ -16,9 +17,19 @@ function Community() {
 			resetForm();
 			return alert('제목과 본문을 모두 입력하세요.');
 		}
-		setPosts([...Posts, { title: input.current.value, content: textarea.current.value }]);
+		setPosts([{ title: input.current.value, content: textarea.current.value }, ...Posts]);
 		resetForm();
 	};
+
+	const deletePost = (index) => {
+		setPosts(Posts.filter((post, idx) => idx !== index));
+	};
+
+	useEffect(() => {
+		axios.get(`${process.env.PUBLIC_URL}/DB/dummyPosts.json`).then((json) => {
+			setPosts(json.data.posts);
+		});
+	}, []);
 
 	useEffect(() => {
 		console.log(Posts);
@@ -34,6 +45,22 @@ function Community() {
 
 				<button onClick={resetForm}>CANCEL</button>
 				<button onClick={createPost}>WRITE</button>
+			</div>
+
+			<div className='showBox'>
+				{Posts.map((post, idx) => {
+					return (
+						<article key={idx}>
+							<h2>{post.title}</h2>
+							<p>{post.content}</p>
+
+							<div className='btnSet'>
+								<button>EDIT</button>
+								<button onClick={() => deletePost(idx)}>DELETE</button>
+							</div>
+						</article>
+					);
+				})}
 			</div>
 		</Layout>
 	);
