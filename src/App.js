@@ -1,10 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
-import Visual from './components/main/Visual';
-import News from './components/main/News';
-import Pics from './components/main/Pics';
-import Vids from './components/main/Vids';
+import Main from './components/main/Main';
 
 import Department from './components/sub/Department';
 import Community from './components/sub/Community';
@@ -19,18 +16,8 @@ function App() {
 		<>
 			{/* main */}
 			<Switch>
-				<Route exact path='/'>
-					<Header type={'main'} />
-					<Visual />
-					<News />
-					<Pics />
-					<Vids />
-				</Route>
-
-				{/* sub */}
-				<Route path='/'>
-					<Header type={'sub'} />
-				</Route>
+				<Route exact path='/' component={Main} />
+				<Route path='/' render={() => <Header type={'sub'} />} />
 			</Switch>
 
 			<Route path='/department' component={Department} />
