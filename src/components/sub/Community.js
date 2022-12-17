@@ -37,14 +37,12 @@ function Community() {
 		];
 
 		const data = localStorage.getItem('post');
-
 		if (data) {
 			return JSON.parse(data);
 		} else {
 			return dummyPosts;
 		}
 	};
-
 	const input = useRef(null);
 	const textarea = useRef(null);
 	const inputEdit = useRef(null);
@@ -121,7 +119,6 @@ function Community() {
 	};
 
 	useEffect(() => {
-		console.log(Posts);
 		localStorage.setItem('post', JSON.stringify(Posts));
 	}, [Posts]);
 
