@@ -47,15 +47,32 @@
 				align-content: center;
 
 				.txt {
-					width: 88%;
+					width: calc(88% - 50px);
+				}
+
+				.editTxt {
+					width: calc(88% - 50px);
+					input[type='text'],
+					textarea {
+						width: 100%;
+						padding: 8px 10px;
+						border: 1px solid lightblue;
+						margin-bottom: 20px;
+						background: #edf8fb;
+						resize: none;
+					}
+					textarea {
+						margin-bottom: 0px;
+					}
 				}
 
 				.btnSet {
-					width: 10%;
+					width: calc(10% - 50px);
 					display: flex;
 					align-items: center;
 					margin-top: 20px;
 					justify-content: flex-end;
+					gap: 20px;
 
 					button {
 						background: transparent;
