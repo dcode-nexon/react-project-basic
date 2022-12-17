@@ -2,4 +2,75 @@
 	figure {
 		background: lightgreen;
 	}
+
+	> .inner {
+		.inputBox {
+			width: 100%;
+			border: 1px solid #bbb;
+			padding: 50px;
+			margin-bottom: 50px;
+
+			input[type='text'],
+			textarea {
+				width: 50%;
+				padding: 8px 10px;
+				border: 1px solid #aaa;
+				margin-bottom: 20px;
+				resize: none;
+			}
+			.btnSet {
+				button {
+					width: 150px;
+					height: 30px;
+					display: inline-block;
+					border: none;
+					background: #555;
+					color: #fff;
+					cursor: pointer;
+					margin-right: 20px;
+				}
+			}
+		}
+
+		.showBox {
+			width: 100%;
+			border: 1px solid #bbb;
+			padding: 50px;
+
+			article {
+				background: #fff;
+				padding: 30px;
+				margin-bottom: 40px;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				align-content: center;
+
+				.txt {
+					width: 88%;
+				}
+
+				.btnSet {
+					width: 10%;
+					display: flex;
+					align-items: center;
+					margin-top: 20px;
+					justify-content: flex-end;
+
+					button {
+						background: transparent;
+						margin: 10 px;
+						cursor: pointer;
+						border: none;
+						&:nth-of-type(1) {
+							color: orange;
+						}
+						&:nth-of-type(2) {
+							color: orangered;
+						}
+					}
+				}
+			}
+		}
+	}
 }
