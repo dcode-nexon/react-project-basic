@@ -1,4 +1,7 @@
+//https://www.framer.com/motion/
+//npm i framer-motion@6
 import { useEffect, forwardRef, useImperativeHandle, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Modal = forwardRef((props, ref) => {
 	const [Open, setOpen] = useState(false);
@@ -14,16 +17,34 @@ const Modal = forwardRef((props, ref) => {
 	}, [Open]);
 
 	return (
-		<>
+		<AnimatePresence>
 			{Open && (
-				<aside className='modal'>
-					<div className='con'>{props.children}</div>
-					<span className='close' onClick={() => setOpen(false)}>
+				<motion.aside
+					className='modal'
+					initial={{ opacity: 0, scale: 0 }}
+					animate={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
+					exit={{ opacity: 0, x: 500, transition: { duration: 0.5, delay: 0.5 } }}
+				>
+					<motion.div
+						className='con'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }}
+						exit={{ opacity: 0, transition: { duration: 0.5, delay: 0 } }}
+					>
+						{props.children}
+					</motion.div>
+					<motion.span
+						className='close'
+						onClick={() => setOpen(false)}
+						initial={{ x: 100, opacity: 0 }}
+						animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 1.5 } }}
+						exit={{ x: 100, opacity: 0, transition: { duration: 0.5, delay: 0.5 } }}
+					>
 						close
-					</span>
-				</aside>
+					</motion.span>
+				</motion.aside>
 			)}
-		</>
+		</AnimatePresence>
 	);
 });
 
