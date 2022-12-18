@@ -7,12 +7,32 @@ footer {
 		width: 1180px;
 		margin: 0 auto;
 		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+		flex-wrap: wrap;
 
 		p {
-			text-align: center;
 			font: 12px/1 'arial';
 			color: #999;
 			letter-spacing: 2px;
+		}
+
+		.member {
+			display: flex;
+			gap: 10px;
+			li {
+				width: 40px;
+				height: 40px;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					filter: saturate(0);
+				}
+			}
 		}
 	}
 }
