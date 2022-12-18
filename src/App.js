@@ -13,25 +13,31 @@ import './scss/style.scss';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube } from './redux/action';
+import { setYoutube, setMembers } from './redux/action';
 import axios from 'axios';
 
 function App() {
 	const dispatch = useDispatch();
 
-	const getYoutube = () => {
+	const getYoutube = async () => {
 		const key = 'AIzaSyCjKYbUcNseIkTsTgciA-Pkjzcm-_IjYdM';
 		const playlist = 'PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu';
 		const num = 10;
 		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 
-		axios.get(url).then((json) => {
-			dispatch(setYoutube(json.data.items));
-		});
+		const result = await axios.get(url);
+		dispatch(setYoutube(result.data.items));
+	};
+
+	const getMembers = async () => {
+		const url = process.env.PUBLIC_URL + '/DB/members.json';
+		const result = await axios.get(url);
+		dispatch(setMembers(result.data.members));
 	};
 
 	useEffect(() => {
 		getYoutube();
+		getMembers();
 	}, []);
 
 	return (
