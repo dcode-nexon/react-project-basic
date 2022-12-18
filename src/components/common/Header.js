@@ -6,6 +6,7 @@ import Menu from './Menu';
 
 function Header({ type }) {
 	const menu = useRef(null);
+	const btnToggle = useRef(null);
 	const active = { color: 'aqua' };
 	return (
 		<header className={type}>
@@ -47,10 +48,20 @@ function Header({ type }) {
 					</li>
 				</ul>
 
-				<FontAwesomeIcon icon={faBars} onClick={() => menu.current.toggle()} />
+				{/* <FontAwesomeIcon icon={faBars} onClick={() => menu.current.toggle()} /> */}
+				<div
+					ref={btnToggle}
+					className='toggle'
+					onClick={(e) => {
+						e.target.classList.toggle('close');
+						menu.current.toggle();
+					}}
+				>
+					<span>모바일 메뉴 토글버튼</span>
+				</div>
 			</div>
 
-			<Menu ref={menu} />
+			<Menu ref={menu} btnToggle={btnToggle} />
 		</header>
 	);
 }

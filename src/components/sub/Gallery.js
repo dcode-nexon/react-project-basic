@@ -38,7 +38,6 @@ function Gallery() {
 			return alert('해당 검색어의 결과 이미지가 없습니다.');
 		}
 
-		console.log(result.data.photos.photo);
 		setItems(result.data.photos.photo);
 
 		setTimeout(() => {

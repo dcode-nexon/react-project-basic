@@ -15,7 +15,6 @@ function Youtube() {
 
 	useEffect(() => {
 		axios.get(url).then((json) => {
-			console.log(json.data.items);
 			setVids(json.data.items);
 		});
 	}, []);

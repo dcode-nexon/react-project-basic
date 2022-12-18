@@ -1,4 +1,4 @@
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,16 @@ const Menu = forwardRef((props, ref) => {
 		};
 	});
 
+	useEffect(() => {
+		window.addEventListener('resize', () => {
+			const wid = window.innerWidth;
+			if (wid >= 1200) {
+				setOpen(false);
+				props.btnToggle.current.classList.remove('close');
+			}
+		});
+	}, []);
+
 	return (
 		<AnimatePresence>
 			{Open && (
@@ -24,6 +34,10 @@ const Menu = forwardRef((props, ref) => {
 					initial={{ opacity: 0, x: -320 }}
 					animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
 					exit={{ opacity: 0, x: -320, transition: { duration: 0.5 } }}
+					onClick={() => {
+						setOpen(false);
+						props.btnToggle.current.classList.remove('close');
+					}}
 				>
 					<h1>
 						<Link to='/'>DCODELAB</Link>
