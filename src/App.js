@@ -11,7 +11,29 @@ import Member from './components/sub/Member';
 import Location from './components/sub/Location';
 import './scss/style.scss';
 
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setYoutube } from './redux/action';
+import axios from 'axios';
+
 function App() {
+	const dispatch = useDispatch();
+
+	const getYoutube = () => {
+		const key = 'AIzaSyCjKYbUcNseIkTsTgciA-Pkjzcm-_IjYdM';
+		const playlist = 'PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu';
+		const num = 10;
+		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+
+		axios.get(url).then((json) => {
+			dispatch(setYoutube(json.data.items));
+		});
+	};
+
+	useEffect(() => {
+		getYoutube();
+	}, []);
+
 	return (
 		<>
 			{/* main */}

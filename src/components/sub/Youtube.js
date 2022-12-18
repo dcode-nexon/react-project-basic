@@ -1,32 +1,17 @@
 import Layout from '../common/Layout';
-import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setYoutube } from '../../redux/action';
+import { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import Modal from '../common/Modal';
 
 function Youtube() {
-	const dispatch = useDispatch();
-	const Vids = useSelector((store) => store.youtubeReducer.youtube);
+	const { youtube } = useSelector((store) => store.youtubeReducer);
 	const modal = useRef(null);
-	const key = 'AIzaSyCjKYbUcNseIkTsTgciA-Pkjzcm-_IjYdM';
-	const playlist = 'PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu';
-	const num = 10;
-	const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
-
 	const [Index, setIndex] = useState(0);
-
-	useEffect(() => {
-		axios.get(url).then((json) => {
-			console.log(json.data.items);
-			dispatch(setYoutube(json.data.items));
-		});
-	}, []);
 
 	return (
 		<>
 			<Layout name={'Youtube'}>
-				{Vids?.map((data, idx) => {
+				{youtube.map((data, idx) => {
 					const tit = data.snippet.title;
 					const desc = data.snippet.description;
 					const date = data.snippet.publishedAt;
@@ -54,7 +39,7 @@ function Youtube() {
 
 			<Modal ref={modal}>
 				<iframe
-					src={`https://www.youtube.com/embed/${Vids[Index]?.snippet.resourceId.videoId}`}
+					src={`https://www.youtube.com/embed/${youtube[Index]?.snippet.resourceId.videoId}`}
 				></iframe>
 			</Modal>
 		</>
