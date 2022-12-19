@@ -1,3 +1,5 @@
+//npm install gh-pages --save-dev
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
