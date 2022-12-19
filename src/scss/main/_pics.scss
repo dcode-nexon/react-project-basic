@@ -4,4 +4,10 @@
 	background: #fff9cb;
 	position: relative;
 	padding: 10vw;
+	display: flex;
+	gap: 10px;
+
+	h1 {
+		width: 100%;
+	}
 }

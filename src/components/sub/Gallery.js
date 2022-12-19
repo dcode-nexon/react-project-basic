@@ -1,50 +1,21 @@
 import Layout from '../common/Layout';
-import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
 import Masonry from 'react-masonry-component';
 import Modal from '../common/Modal';
+import { useSelector, useDispatch } from 'react-redux';
+import * as types from '../../redux/actionType';
 
 function Gallery() {
+	const dispatch = useDispatch();
 	const myId = '164021883@N04';
 	const masonryOptions = { transitionDuration: '0.5s' };
 	const frame = useRef(null);
 	const input = useRef(null);
-	const [Items, setItems] = useState([]);
+	const Items = useSelector((store) => store.flickrReducer.flickr);
+	const [Opt, setOpt] = useState({ type: 'user', user: myId });
 	const [Loading, setLoading] = useState(true);
 	const [Index, setIndex] = useState(0);
 	const modal = useRef(null);
-
-	const getFlickr = async (opt) => {
-		const baseURL = 'https://www.flickr.com/services/rest/?format=json&nojsoncallback=1';
-		const key = 'ae5dbef0587895ed38171fcda4afb648';
-		const method_interest = 'flickr.interestingness.getList';
-		const method_search = 'flickr.photos.search';
-		const method_user = 'flickr.people.getPhotos';
-		const num = 50;
-
-		let url = '';
-
-		if (opt.type === 'interest')
-			url = `${baseURL}&method=${method_interest}&api_key=${key}&per_page=${num}`;
-		if (opt.type === 'search')
-			url = `${baseURL}&method=${method_search}&api_key=${key}&per_page=${num}&tags=${opt.tags}`;
-		if (opt.type === 'user')
-			url = `${baseURL}&method=${method_user}&api_key=${key}&per_page=${num}&user_id=${opt.user}`;
-
-		const result = await axios.get(url);
-		if (result.data.photos.photo.length === 0) {
-			frame.current.classList.add('on');
-			setLoading(false);
-			return alert('해당 검색어의 결과 이미지가 없습니다.');
-		}
-
-		setItems(result.data.photos.photo);
-
-		setTimeout(() => {
-			frame.current.classList.add('on');
-			setLoading(false);
-		}, 500);
-	};
 
 	const showSearch = () => {
 		const result = input.current.value.trim();
@@ -52,12 +23,37 @@ function Gallery() {
 		if (!result) return alert('검색어를 입력하세요.');
 		setLoading(true);
 		frame.current.classList.remove('on');
-		getFlickr({ type: 'search', tags: result });
+		setOpt({ type: 'search', tags: result });
 	};
 
-	useEffect(async () => {
-		getFlickr({ type: 'user', user: myId });
-	}, []);
+	const showMine = () => {
+		frame.current.classList.remove('on');
+		setLoading(true);
+		setOpt({ type: 'user', user: myId });
+	};
+
+	const showInterest = () => {
+		frame.current.classList.remove('on');
+		setLoading(true);
+		setOpt({ type: 'interest' });
+	};
+
+	const showUser = (e) => {
+		setLoading(true);
+		frame.current.classList.remove('on');
+		setOpt({ type: 'user', user: e.target.innerText });
+	};
+
+	useEffect(() => {
+		dispatch({ type: types.FLICKR.start, Opt });
+	}, [Opt]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			frame.current.classList.add('on');
+			setLoading(false);
+		}, 500);
+	}, [Items]);
 
 	return (
 		<>
@@ -74,25 +70,8 @@ function Gallery() {
 					</div>
 
 					<nav>
-						<button
-							onClick={() => {
-								frame.current.classList.remove('on');
-								setLoading(true);
-								getFlickr({ type: 'interest' });
-							}}
-						>
-							Interest Gallery
-						</button>
-
-						<button
-							onClick={() => {
-								frame.current.classList.remove('on');
-								setLoading(true);
-								getFlickr({ type: 'user', user: myId });
-							}}
-						>
-							My Gallery
-						</button>
+						<button onClick={showInterest}>Interest Gallery</button>
+						<button onClick={showMine}>My Gallery</button>
 					</nav>
 				</div>
 
@@ -127,15 +106,7 @@ function Gallery() {
 													)
 												}
 											/>
-											<span
-												onClick={(e) => {
-													setLoading(true);
-													frame.current.classList.remove('on');
-													getFlickr({ type: 'user', user: e.target.innerText });
-												}}
-											>
-												{item.owner}
-											</span>
+											<span onClick={showUser}>{item.owner}</span>
 										</div>
 									</div>
 								</article>
