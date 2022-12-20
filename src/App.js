@@ -12,6 +12,8 @@ import Location from './components/sub/Location';
 import './scss/style.scss';
 
 import { fetchYoutube } from './redux/youtubeSlice';
+import { fetchMembers } from './redux/memberSlice';
+import { fetchFlickr } from './redux/flickrSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -20,6 +22,8 @@ function App() {
 
 	useEffect(() => {
 		dispatch(fetchYoutube());
+		dispatch(fetchMembers());
+		dispatch(fetchFlickr({ type: 'user', user: '164021883@N04' }));
 	}, []);
 
 	return (
