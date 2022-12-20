@@ -11,7 +11,17 @@ import Member from './components/sub/Member';
 import Location from './components/sub/Location';
 import './scss/style.scss';
 
+import { fetchYoutube } from './redux/youtubeSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
 function App() {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchYoutube());
+	}, []);
+
 	return (
 		<>
 			{/* main */}
